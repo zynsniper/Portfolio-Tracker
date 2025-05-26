@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
     <title>Register</title>
 </head>
+</script>
 <body>
     <div class="form-container">
         <form action="/register" method="post" autocomplete="off">
@@ -20,6 +21,10 @@
                 <input type="password" id="password" name="password" required>
             </div>
 
+            <br>
+            <img src="https://cdn-icons-png.flaticon.com/512/65/65000.png" alt="" id="imgEye">
+            <br>
+
             <div class="form-actions">
                 <button type="submit">Register</button>
                 <div class="signup-row">
@@ -29,5 +34,8 @@
             </div>
         </form>
     </div>
+    {% include 'flash.html' %}
+    {% include 'img_eye_script.html' %}
+    </script>
 </body>
 </html>

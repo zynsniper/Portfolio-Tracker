@@ -1,0 +1,17 @@
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const eyeIcon = document.getElementById("imgEye");
+        const passwordField = document.getElementById("password");
+
+        eyeIcon.addEventListener("click", function(event) {
+            event.preventDefault();
+            if (passwordField.type === "password") {
+                passwordField.type = "text";   
+                eyeIcon.src = "https://cdn-icons-png.flaticon.com/512/5062/5062877.png";
+            } 
+            else {
+                passwordField.type = "password";
+                eyeIcon.src = "https://cdn-icons-png.flaticon.com/512/65/65000.png";
+            }
+        });
+    });

@@ -19,6 +19,9 @@
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
             </div>
+            <br>
+            <img src="https://cdn-icons-png.flaticon.com/512/65/65000.png" alt="" id="imgEye">
+            <br>
 
             <div class="form-actions">
                 <button type="submit">Login</button>
@@ -29,5 +32,7 @@
             </div>
         </form>
     </div>
+    {% include 'flash.html' %}
+    {% include 'img_eye_script.html' %}
 </body>
 </html>
