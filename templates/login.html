@@ -4,13 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <meta name="description" content="Login page for the Portfolio Calculator application.">
-    <meta name="keywords" content="Portfolio, Calculator, Login, Finance, Investment">
     <title>Login</title>
 </head>
 <body>
     <h1>Login</h1>
-    <form action="/Login" method="post">
+    <form action="/login" method="post">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required><br><br>
 

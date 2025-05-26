@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 portfolioData = []
 
-@app.route("/", methods = ["GET", "POST"])
+@app.route("/home", methods = ["GET", "POST"])
 def home():
     if request.method == "POST":
         asset = request.form.get("asset")
@@ -15,9 +15,13 @@ def home():
 
     return render_template("home.html", portfolio=portfolioData)
 
-@app.route("/Login")
+@app.route("/")
 def login():
     return render_template("login.html")
+
+@app.route("/register")
+def register():
+    return render_template("register.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
