@@ -67,3 +67,31 @@ form button {
 form button:hover {
     background-color: #4abbe0;
 }
+
+#flash-toast {
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+}
+
+.toast {
+    background: #8c7569;
+    color: #fff;
+    padding: 1rem 2rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    margin-bottom: 10px;
+    font-size: 1rem;
+    opacity: 0.95;
+    animation: fadeOut 3s forwards 2s;
+}
+
+.toast.warning { background: #e67e22; }
+.toast.success { background: #27ae60; }
+.toast.error { background: #c0392b; }
+
+@keyframes fadeOut {
+    to { opacity: 0; }
+}

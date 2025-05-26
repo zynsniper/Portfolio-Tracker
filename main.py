@@ -8,6 +8,9 @@ app.secret_key = os.environ.get('FLASK_SECRET_KEY')
 
 portfolioData = []
 
+@app.route("/", methods=["GET"])
+def index():
+    return redirect(url_for("login"))
 
 @app.route("/home", methods = ["GET", "POST"])
 def home():
@@ -21,8 +24,30 @@ def home():
     return render_template("home.html", portfolio=portfolioData)
 
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/login", methods=["GET", "POST"])
 def login():
+    if request.method == "POST":
+        conn = connect()
+        cur = conn.cursor()
+        username = request.form['username']
+        password = request.form['password']
+
+        cur.execute("SELECT password FROM users WHERE username = %s", (username,))
+        result = cur.fetchone()
+        if result:
+            db_password = result[0]
+            if password == db_password:
+                flash("Login successful, welcome back", "success")
+                cur.close()
+                conn.close()
+                return redirect(url_for("home"))
+            else:
+                flash("Incorrect password. Please try again.", "error")
+        else:
+            flash("Username not found. Please register.", "error")
+        cur.close()
+        conn.close()
+
     return render_template("login.html")
 
 @app.route("/register", methods=["GET", "POST"])

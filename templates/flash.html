@@ -8,8 +8,9 @@
     <script>
       setTimeout(function() {
         var toast = document.getElementById('flash-toast');
-        if (toast) { toast.style.display = 'none'; }
-      }, 5000);
+        if (toast.classList.contains('success')) duration = 1500;
+        if (toast.classList.contains('error')) duration = 5000;
+      });
     </script>
   {% endif %}
 {% endwith %}
