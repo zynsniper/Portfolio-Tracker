@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
+from db.config import load_config
+from db.connect import connect
 
 app = Flask(__name__)
 
