@@ -17,11 +17,11 @@ def home():
 
     return render_template("home.html", portfolio=portfolioData)
 
-@app.route("/")
+@app.route("/login", methods=["GET", "POST"])
 def login():
     return render_template("login.html")
 
-@app.route("/register")
+@app.route("/register", methods=["GET", "POST"])
 def register():
     return render_template("register.html")
 
