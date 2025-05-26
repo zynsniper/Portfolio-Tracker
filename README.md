@@ -14,9 +14,9 @@ A simple web application to track your investments, calculate profits/losses, an
 ---
 
 ## 🛠️ Tech Stack
-- **Frontend:** HTML, CSS, Bootstrap
+- **Frontend:** HTML, CSS, Jinja2
 - **Backend:** Python, Flask
-- **Data Storage:** JSON (or CSV)
+- **Data Storage:** PostgreSQL
 - **Visualization:** Chart.js (optional)
 
 ---
