@@ -7,15 +7,24 @@
     <title>Login</title>
 </head>
 <body>
-    <h1>Login</h1>
-    <form action="/login" method="post" autocomplete="off">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br><br>
+    <div class="form-container">
+        <h1>Login</h1>
+        <form action="/login" method="post" autocomplete="off">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br><br>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
 
-        <button type="submit">Login</button>
-        <a href="{{ url_for('register') }}">Dont have an account?</a>
+            <div class="form-actions">
+                <button type="submit">Login</button>
+                <a href="{{ url_for('register') }}">Don't have an account?</a>
+            </div>
+        </form>
+    </div>
 </body>
 </html>
