@@ -7,6 +7,13 @@ bp = Blueprint('main', __name__)
 def index():
     return redirect(url_for("main.login"))
 
+#======================================LOGOUT=====================================#
+
+@bp.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("main.login"))
+
 #======================================LOGIN=====================================#
 
 @bp.route("/login", methods=["GET", "POST"])
@@ -73,19 +80,24 @@ def home():
             (session["user_id"], asset, quantity, price, value)
         )
         conn.commit()
+        cur.close()
+        conn.close()
+        return redirect(url_for("main.home"))
 
     cur.execute(
         "SELECT assetName, quantity, price, value FROM portfolios WHERE userID = %s",
         (session["user_id"],)
     )
     rows = cur.fetchall()
+    cur.execute("SELECT username FROM users WHERE userID = %s", (session["user_id"],))
+    username = cur.fetchone()[0]
 
     portfolio = [
-        {"asset": r[0], "quantity": r[1], "price": r[2], "value": r[3]}
+        {"assetName": r[0], "quantity": r[1], "price": r[2], "value": r[3]}
         for r in rows
     ]
     
-    chart_labels = [item["asset"] for item in portfolio]
+    chart_labels = [item["assetName"] for item in portfolio]
     chart_data = [item["value"] for item in portfolio]
 
     cur.close()
@@ -93,6 +105,7 @@ def home():
 
     return render_template(
         "home.html",
+        username=username,
         portfolio=portfolio,
         chart_labels=chart_labels,
         chart_data=chart_data
