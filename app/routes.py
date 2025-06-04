@@ -1,5 +1,6 @@
 from flask import Blueprint, flash, render_template, request, redirect, url_for, session
 from db.connect import connect
+import yfinance as yf
 
 bp = Blueprint('main', __name__)
 
@@ -69,20 +70,35 @@ def register():
 def home():
     conn = connect()
     cur = conn.cursor()
+    stock_info = None
 
     if request.method == "POST":
-        asset = request.form.get("asset")
-        quantity = request.form.get("quantity")
-        price = request.form.get("price")
-        value = float(quantity) * float(price)
-        cur.execute(
-            "INSERT INTO portfolios (userID, assetName, quantity, price, value) VALUES (%s, %s, %s, %s, %s)",
-            (session["user_id"], asset, quantity, price, value)
-        )
-        conn.commit()
-        cur.close()
-        conn.close()
-        return redirect(url_for("main.home"))
+        if "search_stock" in request.form:
+            symbol = request.form.get("search_stock").upper()
+            try:
+                ticker = yf.Ticker(symbol)
+                data = ticker.history(period="1d")
+                price = round(data['Close'].iloc[-1], 2)
+                stock_info = {
+                    "symbol" : symbol,
+                    "price" : price,
+                    "name" : ticker.info.get("shortName", "N/A")
+                }
+            except Exception:
+                stock_info = {"symbol": symbol, "price": None, "name": "N/A"}
+        else:
+            asset = request.form.get("asset")
+            quantity = request.form.get("quantity")
+            price = request.form.get("price")
+            value = float(quantity) * float(price)
+            cur.execute(
+                "INSERT INTO portfolios (userID, assetName, quantity, price, value) VALUES (%s, %s, %s, %s, %s)",
+                (session["user_id"], asset, quantity, price, value)
+            )
+            conn.commit()
+            cur.close()
+            conn.close()
+            return redirect(url_for("main.home"))
 
     cur.execute(
         "SELECT assetName, quantity, price, value FROM portfolios WHERE userID = %s",
@@ -108,5 +124,6 @@ def home():
         username=username,
         portfolio=portfolio,
         chart_labels=chart_labels,
-        chart_data=chart_data
+        chart_data=chart_data,
+        stock_info=stock_info
     )
