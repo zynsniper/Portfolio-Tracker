@@ -12,19 +12,27 @@
     <h1>Welcome back, {{ username }}!</h1>
     <p>Your one-stop portfolio tracking app.</p>
 
-    <div class="main-content">
-        <form method="post">
-            <label for="asset">Asset Name:</label> 
-            <input type="text" id="asset" name="asset" required autocomplete="off"><br><br>
+    <div class="dashboard-layout">
+        <div class="left-panel">
+            <form method="post">
+                <label for="asset">Asset Name:</label>
+                <input type="text" id="asset" name="asset" required autocomplete="off"><br><br>
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" name="quantity" min="0" step="any" required><br><br>
+                <label for="price">Price per unit:</label>
+                <input type="number" id="price" name="price" min="0" step="any" required><br><br>
+                <button type="submit">Add to portfolio</button>
+            </form>
+        </div>
 
-            <label for="quantity">Quantity:</label>
-            <input type="number" id="quantity" name="quantity" min="0" step="any" required><br><br>
-
-            <label for="price">Price per unit:</label>
-            <input type="number" id="price" name="price" min="0" step="any" required><br><br>
-
-            <button type="submit">Add to portfolio</button>
-        </form>
+        <div class="center-panel">
+            <form method="post" class="stock-search-form">
+                <label for="search_stock">Search Stock Symbol:</label>
+                <input type="text" id="search_stock" name="search_stock" placeholder="e.g. AAPL" required autocomplete="off">
+                <button type="submit">Search</button>
+            </form>
+            {% include 'stock_result.html' %}
+        </div>
 
         <div class="chart-container">
             <canvas id="portfolioPie" width="250" height="250"></canvas>
@@ -32,40 +40,6 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-    <script>
-        function generateColors(num) {
-            const colors = [];
-            for (let i = 0; i < num; i++) {
-                const r = Math.floor(Math.random() * 200) + 30;
-                const g = Math.floor(Math.random() * 200) + 30;
-                const b = Math.floor(Math.random() * 200) + 30;
-                colors.push(`rgba(${r}, ${g}, ${b}, 1)`);
-            }
-            return colors;
-        }
-
-        const labels = {{ chart_labels | tojson }};
-        const data = {{ chart_data | tojson }};
-        const backgroundColors = generateColors(labels.length);
-
-        const ctx = document.getElementById('portfolioPie').getContext('2d');
-        new Chart(ctx, {
-            type: 'doughnut', 
-            data: {
-                labels: labels, 
-                datasets: [{
-                    data: data,
-                    backgroundColor: backgroundColors,
-                }],
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {position: 'bottom'},
-                    title: {display: true, text: 'Portfolio Distribution'}
-                }
-            },
-        });
-    </script>
+    {% include 'generate_colour_script.html' %}
 </body>
 </html>

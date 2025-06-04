@@ -86,12 +86,55 @@ form button:hover {
     to { opacity: 0; }
 }
 
-.main-content {
+.dashboard-layout {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    width: 100%;
     gap: 2rem;
     margin-top: 2rem;
+}
+
+.left-panel {
+    flex: 0 0 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.center-panel {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 320px;
+}
+
+.stock-search-form {
+    width: 100%;
+    max-width: 350px;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stock-search-form label,
+.stock-search-form input,
+.stock-search-form button {
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+.stock-result {
+    width: 100%;
+    max-width: 350px;
+    background: #181818;
+    padding: 1rem;
+    border-radius: 8px;
+    color: #fff;
+    margin-top: 0.5rem;
+    text-align: left;
 }
 
 .chart-container {

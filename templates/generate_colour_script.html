@@ -1,0 +1,35 @@
+    <script>
+        function generateColors(num) {
+            const colors = [];
+            for (let i = 0; i < num; i++) {
+                const r = Math.floor(Math.random() * 200) + 30;
+                const g = Math.floor(Math.random() * 200) + 30;
+                const b = Math.floor(Math.random() * 200) + 30;
+                colors.push(`rgba(${r}, ${g}, ${b}, 1)`);
+            }
+            return colors;
+        }
+
+        const labels = {{ chart_labels | tojson }};
+        const data = {{ chart_data | tojson }};
+        const backgroundColors = generateColors(labels.length);
+
+        const ctx = document.getElementById('portfolioPie').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut', 
+            data: {
+                labels: labels, 
+                datasets: [{
+                    data: data,
+                    backgroundColor: backgroundColors,
+                }],
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {position: 'bottom'},
+                    title: {display: true, text: 'Portfolio Distribution'}
+                }
+            },
+        });
+    </script>
