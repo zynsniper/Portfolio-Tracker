@@ -8,12 +8,12 @@ This project was built from the ground up as part of my personal learning journe
 
 ## Features
 
-Add investments (stocks, crypto, or assets)  
-Track total portfolio value   
-Visual pie chart breakdown  
-Search stock symbols by time period  
-Logout functionality  
-Responsive and dark-themed UI  
+- Add investments (stocks, crypto, or assets)  
+- Track total portfolio value   
+- Visual pie chart breakdown  
+- Search stock symbols by time period  
+- Logout functionality  
+- Responsive and dark-themed UI  
 
 ---
 
