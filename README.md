@@ -1,10 +1,10 @@
-# 📊 Portfolio Calculator
+# Portfolio Calculator
 
 A simple web application to track your investments, calculate profits/losses, and view your portfolio summary with clean UI.
 
 ---
 
-## 🚀 Features
+## Features
 - Add stocks or crypto investments.
 - View portfolio value and performance.
 - Gain/loss calculation.
@@ -13,10 +13,10 @@ A simple web application to track your investments, calculate profits/losses, an
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠Tech Stack
 - **Frontend:** HTML, CSS, Jinja2
 - **Backend:** Python, Flask
 - **Data Storage:** PostgreSQL
-- **Visualization:** Chart.js (optional)
+- **Visualization:** Chart.js
 
 ---
