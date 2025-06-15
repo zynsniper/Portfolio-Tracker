@@ -71,19 +71,26 @@ def home():
     conn = connect()
     cur = conn.cursor()
     stock_info = None
+    stock_chart_labels = []
+    stock_chart_data = []
+    period = request.form.get("period", "1mo")  # Default to 30 days
 
     if request.method == "POST":
         if "search_stock" in request.form:
             symbol = request.form.get("search_stock").upper()
+            period = request.form.get("period", "1mo")
             try:
                 ticker = yf.Ticker(symbol)
-                data = ticker.history(period="1d")
-                price = round(data['Close'].iloc[-1], 2)
+                data = ticker.history(period=period)
+                price = round(data['Close'].iloc[-1], 2) if not data.empty else None
                 stock_info = {
-                    "symbol" : symbol,
-                    "price" : price,
-                    "name" : ticker.info.get("shortName", "N/A")
+                    "symbol": symbol,
+                    "price": price,
+                    "name": ticker.info.get("shortName", "N/A")
                 }
+                if not data.empty:
+                    stock_chart_labels = [d.strftime("%Y-%m-%d") for d in data.index]
+                    stock_chart_data = [round(p, 2) for p in data['Close']]
             except Exception:
                 stock_info = {"symbol": symbol, "price": None, "name": "N/A"}
         else:
@@ -115,6 +122,7 @@ def home():
     
     chart_labels = [item["assetName"] for item in portfolio]
     chart_data = [item["value"] for item in portfolio]
+    total_value = sum(item["value"] for item in portfolio)
 
     cur.close()
     conn.close()
@@ -125,5 +133,9 @@ def home():
         portfolio=portfolio,
         chart_labels=chart_labels,
         chart_data=chart_data,
-        stock_info=stock_info
+        stock_info=stock_info,
+        stock_chart_labels=stock_chart_labels,
+        stock_chart_data=stock_chart_data,
+        period=period,
+        total_value=total_value
     )
