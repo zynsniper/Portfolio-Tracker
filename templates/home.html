@@ -29,17 +29,66 @@
             <form method="post" class="stock-search-form">
                 <label for="search_stock">Search Stock Symbol:</label>
                 <input type="text" id="search_stock" name="search_stock" placeholder="e.g. AAPL" required autocomplete="off">
+                <label for="period">Period:</label>
+                <select id="period" name="period">
+                    <option value="1d" {% if period == '1d' %}selected{% endif %}>1 Day</option>
+                    <option value="1mo" {% if period == '1mo' or not period %}selected{% endif %}>30 Days</option>
+                    <option value="1y" {% if period == '1y' %}selected{% endif %}>1 Year</option>
+                    <option value="5y" {% if period == '5y' %}selected{% endif %}>5 Years</option>
+                    <option value="10y" {% if period == '10y' %}selected{% endif %}>10 Years</option>
+                </select>
                 <button type="submit">Search</button>
             </form>
             {% include 'stock_result.html' %}
         </div>
 
         <div class="chart-container">
-            <canvas id="portfolioPie" width="250" height="250"></canvas>
+            <canvas id="portfolioPie" width="320" height="320"></canvas>
+            <script>Chart.defaults.global.defaultFontSize = 14;</script>
+            <div class="portfolio-total">
+                Total Portfolio Value: ${{ '%.2f'|format(total_value) }}
+            </div>
         </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
     {% include 'generate_colour_script.html' %}
+
+    {% if stock_info and stock_chart_labels and stock_chart_data %}
+    <div class="stock-performance-chart">
+        <h4>
+            {{ stock_info.symbol }} Performance
+            ({{ period if period != '1mo' else 'Last 30 Days' }})
+        </h4>
+        <canvas id="stockPerformanceChart"></canvas>
+    </div>
+    <script>
+        const perfLabels = {{ stock_chart_labels|tojson }};
+        const perfData = {{ stock_chart_data|tojson }};
+        const ctxPerf = document.getElementById('stockPerformanceChart').getContext('2d');
+        new Chart(ctxPerf, {
+            type: 'line',
+            data: {
+                labels: perfLabels,
+                datasets: [{
+                    label: '{{ stock_info.symbol }} Close Price',
+                    data: perfData,
+                    borderColor: '#61dafb',
+                    backgroundColor: 'rgba(97,218,251,0.1)',
+                    fill: true,
+                    pointRadius: 2,
+                    borderWidth: 2,
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    xAxes: [{ display: true }],
+                    yAxes: [{ display: true, scaleLabel: { display: true, labelString: 'Price ($)' } }]
+                }
+            }
+        });
+    </script>
+    {% endif %}
 </body>
 </html>
