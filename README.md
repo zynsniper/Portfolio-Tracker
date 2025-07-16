@@ -1,4 +1,4 @@
-#  Portfolio Calculator
+#  Portfolio Tracker
 
 A simple yet functional web application to **track your investments**, **calculate gains/losses**, and **visualize your portfolio** using a clean, responsive interface.
 
